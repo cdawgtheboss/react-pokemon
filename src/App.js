@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SearchBar from './Components/Search'
 
-function App() {
+
+class App extends React.Component{
+  
+  state = {
+    
+  }
+
+  handleSearch = async (e) => {
+    e.preventDefault();
+    if(this.refs.search.value === ''){
+    } else {
+      let baseUrl = `https://pokeapi.co/api/v2/pokemon/${this.refs.search.value}`;
+      let response = await fetch(baseUrl);
+      let json = await response.json();
+      let image = json.sprites.front_default;
+      let weight = json.weight;
+      let height = json.height;
+      console.log(height);
+      console.log(weight);
+      console.log(image);
+
+    }
+  }
+
+
+
+  render(){
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <SearchBar displayData={this.handleSearch.bind(this)} />
     </div>
   );
+}
 }
 
 export default App;
